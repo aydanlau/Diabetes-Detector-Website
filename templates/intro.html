@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Risk Assessment - Introduction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/intro.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="intro-content">
+            <h1>Diabetes Risk Assessment</h1>
+            
+            <div class="completion-counter">
+                <p class="counter-text">We have helped <span class="counter-number">{{ completion_count }}</span> people assess their diabetes risk</p>
+            </div>
+            
+            <div class="intro-section">
+                <h2>What is Diabetes?</h2>
+                <p>
+                    Diabetes is a chronic health condition that affects how your body turns food into energy. 
+                    Most of the food you eat is broken down into sugar (glucose) and released into your bloodstream. 
+                    When your blood sugar goes up, it signals your pancreas to release insulin. Insulin acts like a 
+                    key to let the blood sugar into your body's cells for use as energy.
+                </p>
+                <p>
+                    If you have diabetes, your body either doesn't make enough insulin or can't use the insulin it 
+                    makes as well as it should. When there isn't enough insulin or cells stop responding to insulin, 
+                    too much blood sugar stays in your bloodstream. Over time, that can cause serious health problems, 
+                    such as heart disease, vision loss, and kidney disease.
+                </p>
+            </div>
+            
+            <div class="intro-section">
+                <h2>How This Assessment Can Help</h2>
+                <p>
+                    This diabetes risk assessment tool uses machine learning to analyze various health factors and 
+                    lifestyle choices to estimate your risk of developing diabetes. By answering a series of questions 
+                    about your health, lifestyle, and demographics, you can get an initial assessment of your diabetes risk.
+                </p>
+                <p>The assessment evaluates factors such as:</p>
+                <ul>
+                    <li>Blood pressure and cholesterol levels</li>
+                    <li>Body Mass Index (BMI)</li>
+                    <li>Physical activity and exercise habits</li>
+                    <li>Diet and nutrition</li>
+                    <li>Smoking and alcohol consumption</li>
+                    <li>Overall health status</li>
+                    <li>Age, gender, and other demographic factors</li>
+                </ul>
+                <p>
+                    Based on your responses, you'll receive a personalized risk assessment that can help you understand 
+                    whether you should consult with a healthcare professional for further evaluation.
+                </p>
+            </div>
+            
+            <div class="disclaimer-box">
+                <h3>⚠️ Important Disclaimer</h3>
+                <p>
+                    <strong>This tool is for pre-screening purposes only and is NOT a diagnostic tool.</strong> 
+                    It should not be used as a substitute for professional medical advice, diagnosis, or treatment. 
+                    Always seek the advice of your physician or other qualified health provider with any questions 
+                    you may have regarding a medical condition. Never disregard professional medical advice or delay 
+                    in seeking it because of something you have read or learned from this assessment.
+                </p>
+                <p>
+                    If you have concerns about your health or are experiencing symptoms, please consult with a 
+                    healthcare professional immediately.
+                </p>
+            </div>
+            
+            <a href="/form" class="start-button">Start Assessment</a>
+        </div>
+    </div>
+</body>
+</html>
+

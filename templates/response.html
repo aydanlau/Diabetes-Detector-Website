@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/response.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="result-container">
+            <h1>Diabetes Risk Assessment Results</h1>
+            
+            <div class="prediction-box">
+                <h2>Prediction Result</h2>
+                {% set diabetes_prob = probability.diabetes * 100 %}
+                {% if diabetes_prob < 15 %}
+                    {% set risk_category = "low" %}
+                    {% set risk_text = "Low Risk" %}
+                    {% set risk_color = "#27ae60" %}
+                {% elif diabetes_prob < 35 %}
+                    {% set risk_category = "low-mid" %}
+                    {% set risk_text = "Low-Mid Risk" %}
+                    {% set risk_color = "#f39c12" %}
+                {% elif diabetes_prob < 70 %}
+                    {% set risk_category = "mid-high" %}
+                    {% set risk_text = "Mid-High Risk" %}
+                    {% set risk_color = "#e67e22" %}
+                {% else %}
+                    {% set risk_category = "high" %}
+                    {% set risk_text = "High Risk" %}
+                    {% set risk_color = "#e74c3c" %}
+                {% endif %}
+                
+                <div class="prediction-result risk-{{ risk_category }}">
+                    {{ risk_text }}
+                </div>
+                
+                <div class="risk-display-section">
+                    <div class="risk-percentage-display">
+                        <span class="risk-percentage-value">{{ "%.1f"|format(diabetes_prob) }}%</span>
+                        <span class="risk-percentage-label">Diabetes Risk Probability</span>
+                    </div>
+                    
+                    <div class="risk-bar-container">
+                        <div class="risk-bar-labels">
+                            <span class="risk-label-left">Low Risk (0%)</span>
+                            <span class="risk-label-right">High Risk (100%)</span>
+                        </div>
+                        <div class="risk-bar-wrapper">
+                            <div class="risk-bar">
+                                <div class="risk-indicator-line" style="left: {{ diabetes_prob }}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="next-steps-section">
+                    <div class="next-steps-header" onclick="toggleNextSteps()">
+                        <h3>What should you do next?</h3>
+                        <span class="dropdown-arrow" id="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="next-steps-content" id="next-steps-content">
+                        {% if diabetes_prob < 15 %}
+                            <div class="recommendation-box risk-low">
+                                <h4>Low Risk Recommendations</h4>
+                                <ul>
+                                    <li><strong>Maintain healthy habits:</strong> Continue with your current lifestyle choices that are keeping your risk low.</li>
+                                    <li><strong>Regular check-ups:</strong> Continue annual health screenings and maintain regular contact with your healthcare provider.</li>
+                                    <li><strong>Stay active:</strong> Maintain regular physical activity (at least 150 minutes per week of moderate exercise).</li>
+                                    <li><strong>Balanced diet:</strong> Continue eating a balanced diet rich in fruits, vegetables, and whole grains.</li>
+                                    <li><strong>Monitor your health:</strong> Keep track of your blood pressure, cholesterol, and weight regularly.</li>
+                                </ul>
+                                <p class="note"><strong>Note:</strong> Even with low risk, it's important to maintain regular health check-ups and continue healthy lifestyle habits.</p>
+                            </div>
+                        {% elif diabetes_prob < 35 %}
+                            <div class="recommendation-box risk-low-mid">
+                                <h4>Low-Mid Risk Recommendations</h4>
+                                <ul>
+                                    <li><strong>Consult your healthcare provider:</strong> Schedule an appointment to discuss your risk factors and potential preventive measures.</li>
+                                    <li><strong>Lifestyle modifications:</strong> Consider making changes to improve your diet and increase physical activity.</li>
+                                    <li><strong>Regular monitoring:</strong> Have your blood sugar levels checked during your next routine health exam.</li>
+                                    <li><strong>Weight management:</strong> If you're overweight, work with your healthcare provider on a weight management plan.</li>
+                                    <li><strong>Reduce risk factors:</strong> Address any modifiable risk factors such as smoking, excessive alcohol consumption, or sedentary lifestyle.</li>
+                                </ul>
+                                <p class="note"><strong>Note:</strong> Early intervention and lifestyle changes can significantly reduce your risk of developing diabetes.</p>
+                            </div>
+                        {% elif diabetes_prob < 70 %}
+                            <div class="recommendation-box risk-mid-high">
+                                <h4>Mid-High Risk Recommendations</h4>
+                                <ul>
+                                    <li><strong>Schedule a medical consultation:</strong> Make an appointment with your healthcare provider as soon as possible to discuss your risk.</li>
+                                    <li><strong>Blood glucose testing:</strong> Ask your doctor about getting tested for prediabetes or diabetes (HbA1c, fasting glucose, or oral glucose tolerance test).</li>
+                                    <li><strong>Immediate lifestyle changes:</strong> Begin making significant changes to your diet and exercise routine under medical guidance.</li>
+                                    <li><strong>Weight management program:</strong> If overweight, consider enrolling in a structured weight management program.</li>
+                                    <li><strong>Monitor blood pressure and cholesterol:</strong> Ensure these are well-controlled through lifestyle and/or medication if needed.</li>
+                                    <li><strong>Consider diabetes prevention program:</strong> Ask your healthcare provider about local diabetes prevention programs.</li>
+                                </ul>
+                                <p class="note"><strong>Note:</strong> With mid-high risk, it's important to take action now. Early intervention can prevent or delay the onset of diabetes.</p>
+                            </div>
+                        {% else %}
+                            <div class="recommendation-box risk-high">
+                                <h4>High Risk Recommendations</h4>
+                                <ul>
+                                    <li><strong>See a healthcare provider immediately:</strong> Schedule an appointment with your doctor or an endocrinologist as soon as possible.</li>
+                                    <li><strong>Comprehensive diabetes screening:</strong> Request comprehensive testing including HbA1c, fasting blood glucose, and oral glucose tolerance test.</li>
+                                    <li><strong>Medical evaluation:</strong> Undergo a complete medical evaluation to assess your current health status and identify any existing conditions.</li>
+                                    <li><strong>Lifestyle intervention program:</strong> Enroll in a structured diabetes prevention or management program.</li>
+                                    <li><strong>Medication consideration:</strong> Discuss with your doctor whether medication (such as metformin) may be appropriate for diabetes prevention.</li>
+                                    <li><strong>Regular monitoring:</strong> Establish a plan for regular monitoring of blood glucose, blood pressure, and other health markers.</li>
+                                    <li><strong>Support network:</strong> Consider joining a support group or working with a diabetes educator.</li>
+                                </ul>
+                                <p class="note"><strong>Note:</strong> With high risk, immediate medical attention and intervention are crucial. Do not delay in seeking professional healthcare advice.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <a href="/" class="back-button">Retake the form</a>
+        </div>
+    </div>
+    
+    <script>
+        function toggleNextSteps() {
+            const content = document.getElementById('next-steps-content');
+            const arrow = document.getElementById('dropdown-arrow');
+            
+            content.classList.toggle('open');
+            
+            if (content.classList.contains('open')) {
+                arrow.textContent = '▲';
+            } else {
+                arrow.textContent = '▼';
+            }
+        }
+        
+        // Open the dropdown by default
+        window.addEventListener('DOMContentLoaded', function() {
+            toggleNextSteps();
+        });
+    </script>
+</body>
+</html>
+

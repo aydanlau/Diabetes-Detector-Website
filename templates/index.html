@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Diabetes Risk Assessment Form</h1>
+        <div class="progress-indicator">
+            <span id="current-step">1</span> of <span id="total-steps">5</span>
+        </div>
+        <form action="/response" method="POST" id="diabetesForm">
+            
+            <!-- Health Conditions Section -->
+            <div class="form-section" data-section="0">
+                <div class="section-title">Health Conditions</div>
+                
+                <div class="form-group">
+                    <label>Do you have high blood pressure?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="high_bp" id="high_bp_no" value="0" required>
+                            <label for="high_bp_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="high_bp" id="high_bp_yes" value="1" required>
+                            <label for="high_bp_yes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Do you have high cholesterol?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="high_chol" id="high_chol_no" value="0" required>
+                            <label for="high_chol_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="high_chol" id="high_chol_yes" value="1" required>
+                            <label for="high_chol_yes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>BMI Calculator</label>
+                    <div class="bmi-calculator">
+                        <div class="bmi-inputs">
+                            <div>
+                                <label for="height">Height (cm)</label>
+                                <input type="number" id="height" name="height" step="0.1" min="0" placeholder="e.g., 175">
+                            </div>
+                            <div>
+                                <label for="weight">Weight (kg)</label>
+                                <input type="number" id="weight" name="weight" step="0.1" min="0" placeholder="e.g., 70">
+                            </div>
+                        </div>
+                        <div class="bmi-result" id="bmiResult">BMI will appear here</div>
+                        <input type="hidden" id="bmi" name="bmi" value="">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Have you had a stroke?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="stroke" id="stroke_no" value="0" required>
+                            <label for="stroke_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="stroke" id="stroke_yes" value="1" required>
+                            <label for="stroke_yes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Have you had Coronary Heart Disease or Myocardial Infarction?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="heart_disease" id="heart_disease_no" value="0" required>
+                            <label for="heart_disease_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="heart_disease" id="heart_disease_yes" value="1" required>
+                            <label for="heart_disease_yes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="nav-btn next-btn" onclick="nextSection()">Next</button>
+                </div>
+            </div>
+            
+            <!-- Lifestyle Section -->
+            <div class="form-section" data-section="1" style="display: none;">
+                <div class="section-title">Lifestyle Factors</div>
+                
+                <div class="form-group">
+                    <label>Have you smoked at least 100 cigarettes in your life? (5 packs = 100 cigarettes)</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="smoking" id="smoking_no" value="0" required>
+                            <label for="smoking_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="smoking" id="smoking_yes" value="1" required>
+                            <label for="smoking_yes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Have you had any physical activity in the past 30 days outside of work?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="phys_activity" id="phys_activity_no" value="0" required>
+                            <label for="phys_activity_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="phys_activity" id="phys_activity_yes" value="1" required>
+                            <label for="phys_activity_yes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Do you consume 1 or more fruits a day?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="fruits" id="fruits_no" value="0" required>
+                            <label for="fruits_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="fruits" id="fruits_yes" value="1" required>
+                            <label for="fruits_yes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Are you a heavy drinker? (Adult men: more than 14 drinks/week, Adult women: more than 7 drinks/week)</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="heavy_drinker" id="heavy_drinker_no" value="0" required>
+                            <label for="heavy_drinker_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="heavy_drinker" id="heavy_drinker_yes" value="1" required>
+                            <label for="heavy_drinker_yes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="nav-btn back-btn" onclick="prevSection()">Back</button>
+                    <button type="button" class="nav-btn next-btn" onclick="nextSection()">Next</button>
+                </div>
+            </div>
+            
+            <!-- Healthcare Access Section -->
+            <div class="form-section" data-section="2" style="display: none;">
+                <div class="section-title">Healthcare Access</div>
+                
+                <div class="form-group">
+                    <label>Was there a time in the past 12 months when you needed to see a doctor but couldn't due to the cost?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="no_docbc_cost" id="no_docbc_cost_no" value="0" required>
+                            <label for="no_docbc_cost_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="no_docbc_cost" id="no_docbc_cost_yes" value="1" required>
+                            <label for="no_docbc_cost_yes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="nav-btn back-btn" onclick="prevSection()">Back</button>
+                    <button type="button" class="nav-btn next-btn" onclick="nextSection()">Next</button>
+                </div>
+            </div>
+            
+            <!-- Health Status Section -->
+            <div class="form-section" data-section="3" style="display: none;">
+                <div class="section-title">Health Status</div>
+                
+                <div class="form-group">
+                    <label for="gen_hlth">Would you say that in general your health is:</label>
+                    <select name="gen_hlth" id="gen_hlth" required>
+                        <option value="">Select...</option>
+                        <option value="1">Excellent</option>
+                        <option value="2">Very Good</option>
+                        <option value="3">Good</option>
+                        <option value="4">Fair</option>
+                        <option value="5">Poor</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ment_hlth">Now thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your mental health not good?</label>
+                    <input type="number" name="ment_hlth" id="ment_hlth" min="0" max="30" required placeholder="0-30 days">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phys_hlth">Now thinking about your physical health, which includes physical illness and injury, for how many days during the past 30 days was your physical health not good? </label>
+                    <input type="number" name="phys_hlth" id="phys_hlth" min="0" max="30" required placeholder="0-30 days">
+                </div>
+                
+                <div class="form-group">
+                    <label>Do you have serious difficulty walking or climbing stairs?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="diff_walk" id="diff_walk_no" value="0" required>
+                            <label for="diff_walk_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="diff_walk" id="diff_walk_yes" value="1" required>
+                            <label for="diff_walk_yes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="nav-btn back-btn" onclick="prevSection()">Back</button>
+                    <button type="button" class="nav-btn next-btn" onclick="nextSection()">Next</button>
+                </div>
+            </div>
+            
+            <!-- Demographics Section -->
+            <div class="form-section" data-section="4" style="display: none;">
+                <div class="section-title">Demographics</div>
+                
+                <div class="form-group">
+                    <label>Gender</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="sex" id="sex_female" value="0" required>
+                            <label for="sex_female">Female</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="sex" id="sex_male" value="1" required>
+                            <label for="sex_male">Male</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Age Category</label>
+                    <select name="age" id="age" required>
+                        <option value="">Select...</option>
+                        <option value="1">18-24 years</option>
+                        <option value="2">25-29 years</option>
+                        <option value="3">30-34 years</option>
+                        <option value="4">35-39 years</option>
+                        <option value="5">40-44 years</option>
+                        <option value="6">45-49 years</option>
+                        <option value="7">50-54 years</option>
+                        <option value="8">55-59 years</option>
+                        <option value="9">60-64 years</option>
+                        <option value="10">65-69 years</option>
+                        <option value="11">70-74 years</option>
+                        <option value="12">75-79 years</option>
+                        <option value="13">80-99 years</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="income">Income Scale</label>
+                    <select name="income" id="income" required>
+                        <option value="">Select...</option>
+                        <option value="1">Less than $10,000</option>
+                        <option value="2">Less than $15,000</option>
+                        <option value="3">Less than $20,000</option>
+                        <option value="4">Less than $25,000</option>
+                        <option value="5">Less than $35,000</option>
+                        <option value="6">Less than $50,000</option>
+                        <option value="7">Less than $75,000</option>
+                        <option value="8">Less than $100,000</option>
+                        <option value="9">Less than $150,000</option>
+                        <option value="10">Less than $200,000</option>
+                        <option value="11">$200,000 or more</option>
+                    </select>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="nav-btn back-btn" onclick="prevSection()">Back</button>
+                    <button type="submit" class="nav-btn submit-btn">Submit Assessment</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        let currentSection = 0;
+        const totalSections = 5;
+        
+        function calculateBMI() {
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const bmiResult = document.getElementById('bmiResult');
+            const bmiInput = document.getElementById('bmi');
+            
+            if (height > 0 && weight > 0) {
+                // BMI = weight (kg) / (height (m))^2
+                // Convert height from cm to meters: height / 100
+                const heightInMeters = height / 100;
+                const bmi = weight / (heightInMeters * heightInMeters);
+                const roundedBMI = Math.round(bmi * 10) / 10;
+                bmiResult.textContent = `BMI: ${roundedBMI}`;
+                bmiInput.value = roundedBMI;
+            } else {
+                bmiResult.textContent = 'Please enter valid height and weight';
+                bmiInput.value = '';
+            }
+        }
+        
+        // Auto-calculate BMI when both fields are filled
+        document.getElementById('height').addEventListener('input', calculateBMI);
+        document.getElementById('weight').addEventListener('input', calculateBMI);
+        
+        function validateSection(sectionIndex) {
+            const section = document.querySelector(`[data-section="${sectionIndex}"]`);
+            const requiredFields = section.querySelectorAll('input[required], select[required]');
+            
+            // Special validation for BMI in section 0
+            if (sectionIndex === 0) {
+                const height = parseFloat(document.getElementById('height').value);
+                const weight = parseFloat(document.getElementById('weight').value);
+                const bmiValue = parseFloat(document.getElementById('bmi').value);
+                if (!height || !weight || height <= 0 || weight <= 0 || !bmiValue || bmiValue <= 0) {
+                    return false;
+                }
+            }
+            
+            for (let field of requiredFields) {
+                // Skip BMI field as it's handled separately
+                if (field.id === 'bmi') {
+                    continue;
+                }
+                
+                // Check radio buttons
+                if (field.type === 'radio') {
+                    const radioGroup = section.querySelectorAll(`input[name="${field.name}"]`);
+                    const isChecked = Array.from(radioGroup).some(radio => radio.checked);
+                    if (!isChecked) {
+                        return false;
+                    }
+                }
+                // Check select dropdowns
+                else if (field.tagName === 'SELECT') {
+                    if (!field.value || field.value === '') {
+                        return false;
+                    }
+                }
+                // Check number inputs
+                else if (field.type === 'number') {
+                    if (field.value === '' || field.value === null) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        
+        function showSection(sectionIndex) {
+            // Hide all sections
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show current section
+            const currentSectionElement = document.querySelector(`[data-section="${sectionIndex}"]`);
+            if (currentSectionElement) {
+                currentSectionElement.style.display = 'block';
+            }
+            
+            // Update progress indicator
+            document.getElementById('current-step').textContent = sectionIndex + 1;
+        }
+        
+        function nextSection() {
+            if (!validateSection(currentSection)) {
+                alert('Please complete all required fields in this section before proceeding.');
+                return;
+            }
+            
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                showSection(currentSection);
+            }
+        }
+        
+        function prevSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                showSection(currentSection);
+            }
+        }
+        
+        // Initialize - show first section
+        showSection(0);
+    </script>
+</body>
+</html>

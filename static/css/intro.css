@@ -1,0 +1,98 @@
+.intro-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.completion-counter {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.counter-text {
+    color: white;
+    font-size: 1.3em;
+    margin: 0;
+    font-weight: 500;
+}
+
+.counter-number {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.intro-section {
+    margin-bottom: 30px;
+}
+
+.intro-section h2 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+.intro-section p {
+    line-height: 1.8;
+    color: #555;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+.intro-section ul {
+    margin-left: 20px;
+    line-height: 1.8;
+    color: #555;
+}
+
+.intro-section li {
+    margin-bottom: 10px;
+}
+
+.disclaimer-box {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 30px 0;
+}
+
+.disclaimer-box h3 {
+    color: #856404;
+    margin-bottom: 10px;
+}
+
+.disclaimer-box p {
+    color: #856404;
+    font-weight: 500;
+}
+
+.start-button {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 40px auto;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.start-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
