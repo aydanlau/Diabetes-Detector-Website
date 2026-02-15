@@ -48,8 +48,18 @@
                 
                 <div class="form-group">
                     <label>BMI Calculator</label>
+                    <div class="bmi-unit-toggle">
+                        <label class="unit-option">
+                            <input type="radio" name="bmi_unit" value="metric" id="bmi_unit_metric" checked>
+                            <span>Metric (cm, kg)</span>
+                        </label>
+                        <label class="unit-option">
+                            <input type="radio" name="bmi_unit" value="imperial" id="bmi_unit_imperial">
+                            <span>Imperial (ft, in, lbs)</span>
+                        </label>
+                    </div>
                     <div class="bmi-calculator">
-                        <div class="bmi-inputs">
+                        <div class="bmi-inputs bmi-metric">
                             <div>
                                 <label for="height">Height (cm)</label>
                                 <input type="number" id="height" name="height" step="0.1" min="0" placeholder="e.g., 175">
@@ -57,6 +67,20 @@
                             <div>
                                 <label for="weight">Weight (kg)</label>
                                 <input type="number" id="weight" name="weight" step="0.1" min="0" placeholder="e.g., 70">
+                            </div>
+                        </div>
+                        <div class="bmi-inputs bmi-imperial" style="display: none;">
+                            <div>
+                                <label for="height_ft">Height (feet)</label>
+                                <input type="number" id="height_ft" min="0" max="8" placeholder="5" aria-label="Height feet">
+                            </div>
+                            <div>
+                                <label for="height_in">Height (inches)</label>
+                                <input type="number" id="height_in" min="0" max="11" placeholder="9" aria-label="Height inches">
+                            </div>
+                            <div>
+                                <label for="weight_lbs">Weight (lbs)</label>
+                                <input type="number" id="weight_lbs" min="0" step="0.1" placeholder="e.g., 154" aria-label="Weight pounds">
                             </div>
                         </div>
                         <div class="bmi-result" id="bmiResult">BMI will appear here</div>
@@ -272,26 +296,26 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="income">Income Scale</label>
+                    <label for="income">Annual Income in US$</label>
                     <select name="income" id="income" required>
                         <option value="">Select...</option>
-                        <option value="1">Less than $10,000</option>
-                        <option value="2">Less than $15,000</option>
-                        <option value="3">Less than $20,000</option>
-                        <option value="4">Less than $25,000</option>
-                        <option value="5">Less than $35,000</option>
-                        <option value="6">Less than $50,000</option>
-                        <option value="7">Less than $75,000</option>
-                        <option value="8">Less than $100,000</option>
-                        <option value="9">Less than $150,000</option>
-                        <option value="10">Less than $200,000</option>
-                        <option value="11">$200,000 or more</option>
+                        <option value="1">Less than US$10,000</option>
+                        <option value="2">Less than US$15,000</option>
+                        <option value="3">Less than US$20,000</option>
+                        <option value="4">Less than US$25,000</option>
+                        <option value="5">Less than US$35,000</option>
+                        <option value="6">Less than US$50,000</option>
+                        <option value="7">Less than US$75,000</option>
+                        <option value="8">Less than US$100,000</option>
+                        <option value="9">Less than US$150,000</option>
+                        <option value="10">Less than US$200,000</option>
+                        <option value="11">US$200,000 or more</option>
                     </select>
                 </div>
                 
                 <div class="form-navigation">
                     <button type="button" class="nav-btn back-btn" onclick="prevSection()">Back</button>
-                    <button type="submit" class="nav-btn submit-btn">Submit Assessment</button>
+                    <button type="submit" class="nav-btn submit-btn" id="submitBtn">Submit Assessment</button>
                 </div>
             </div>
         </form>
@@ -301,17 +325,52 @@
         let currentSection = 0;
         const totalSections = 5;
         
+        function isImperial() {
+            return document.getElementById('bmi_unit_imperial').checked;
+        }
+        
+        function toggleBmiUnits() {
+            const metric = document.querySelector('.bmi-metric');
+            const imperial = document.querySelector('.bmi-imperial');
+            if (isImperial()) {
+                metric.style.display = 'none';
+                imperial.style.display = 'grid';
+                document.getElementById('height').value = '';
+                document.getElementById('weight').value = '';
+            } else {
+                metric.style.display = 'grid';
+                imperial.style.display = 'none';
+                document.getElementById('height_ft').value = '';
+                document.getElementById('height_in').value = '';
+                document.getElementById('weight_lbs').value = '';
+            }
+            document.getElementById('bmiResult').textContent = 'BMI will appear here';
+            document.getElementById('bmi').value = '';
+        }
+        
         function calculateBMI() {
-            const height = parseFloat(document.getElementById('height').value);
-            const weight = parseFloat(document.getElementById('weight').value);
             const bmiResult = document.getElementById('bmiResult');
             const bmiInput = document.getElementById('bmi');
+            let bmi;
             
-            if (height > 0 && weight > 0) {
-                // BMI = weight (kg) / (height (m))^2
-                // Convert height from cm to meters: height / 100
-                const heightInMeters = height / 100;
-                const bmi = weight / (heightInMeters * heightInMeters);
+            if (isImperial()) {
+                const feet = parseInt(document.getElementById('height_ft').value, 10) || 0;
+                const inches = parseInt(document.getElementById('height_in').value, 10) || 0;
+                const weightLbs = parseFloat(document.getElementById('weight_lbs').value) || 0;
+                const heightInches = feet * 12 + inches;
+                if (heightInches > 0 && weightLbs > 0) {
+                    bmi = (weightLbs / (heightInches * heightInches)) * 703;
+                }
+            } else {
+                const height = parseFloat(document.getElementById('height').value);
+                const weight = parseFloat(document.getElementById('weight').value);
+                if (height > 0 && weight > 0) {
+                    const heightInMeters = height / 100;
+                    bmi = weight / (heightInMeters * heightInMeters);
+                }
+            }
+            
+            if (bmi > 0 && isFinite(bmi)) {
                 const roundedBMI = Math.round(bmi * 10) / 10;
                 bmiResult.textContent = `BMI: ${roundedBMI}`;
                 bmiInput.value = roundedBMI;
@@ -321,9 +380,13 @@
             }
         }
         
-        // Auto-calculate BMI when both fields are filled
+        document.getElementById('bmi_unit_metric').addEventListener('change', toggleBmiUnits);
+        document.getElementById('bmi_unit_imperial').addEventListener('change', toggleBmiUnits);
         document.getElementById('height').addEventListener('input', calculateBMI);
         document.getElementById('weight').addEventListener('input', calculateBMI);
+        document.getElementById('height_ft').addEventListener('input', calculateBMI);
+        document.getElementById('height_in').addEventListener('input', calculateBMI);
+        document.getElementById('weight_lbs').addEventListener('input', calculateBMI);
         
         function validateSection(sectionIndex) {
             const section = document.querySelector(`[data-section="${sectionIndex}"]`);
@@ -331,11 +394,18 @@
             
             // Special validation for BMI in section 0
             if (sectionIndex === 0) {
-                const height = parseFloat(document.getElementById('height').value);
-                const weight = parseFloat(document.getElementById('weight').value);
                 const bmiValue = parseFloat(document.getElementById('bmi').value);
-                if (!height || !weight || height <= 0 || weight <= 0 || !bmiValue || bmiValue <= 0) {
-                    return false;
+                if (!bmiValue || bmiValue <= 0) return false;
+                if (document.getElementById('bmi_unit_imperial').checked) {
+                    const feet = parseInt(document.getElementById('height_ft').value, 10) || 0;
+                    const inches = parseInt(document.getElementById('height_in').value, 10) || 0;
+                    const weightLbs = parseFloat(document.getElementById('weight_lbs').value) || 0;
+                    const heightInches = feet * 12 + inches;
+                    if (heightInches <= 0 || weightLbs <= 0) return false;
+                } else {
+                    const height = parseFloat(document.getElementById('height').value);
+                    const weight = parseFloat(document.getElementById('weight').value);
+                    if (!height || !weight || height <= 0 || weight <= 0) return false;
                 }
             }
             
@@ -403,6 +473,13 @@
                 showSection(currentSection);
             }
         }
+        
+        // Disable submit button after click to prevent double submission
+        document.getElementById('diabetesForm').addEventListener('submit', function() {
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+        });
         
         // Initialize - show first section
         showSection(0);
