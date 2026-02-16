@@ -4,56 +4,65 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 15px;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    padding: 20px;
+    padding: 12px;
+    overflow-x: hidden;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
     background: white;
-    border-radius: 15px;
-    padding: 30px;
+    border-radius: 12px;
+    padding: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 h1 {
     color: #333;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-align: center;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 .form-section {
-    margin-bottom: 25px;
-    padding: 20px;
+    margin-bottom: 18px;
+    padding: 14px;
     background: #f8f9fa;
-    border-radius: 10px;
+    border-radius: 8px;
     border-left: 4px solid #667eea;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 }
 
 label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: #333;
     font-weight: 500;
+    font-size: 0.95em;
 }
 
 input[type="number"],
 input[type="text"],
 select {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border: 2px solid #ddd;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
+    max-width: 100%;
     transition: border-color 0.3s;
 }
 
@@ -151,16 +160,16 @@ select:focus {
 
 .submit-btn {
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 0.95em;
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    margin-top: 20px;
+    margin-top: 16px;
 }
 
 .submit-btn:hover {
@@ -186,16 +195,16 @@ select:focus {
 }
 
 .section-title {
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #667eea;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     font-weight: 600;
 }
 
 .progress-indicator {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.1em;
+    margin-bottom: 14px;
+    font-size: 0.95em;
     color: #666;
     font-weight: 500;
 }
@@ -203,22 +212,22 @@ select:focus {
 .progress-indicator #current-step {
     color: #667eea;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1.05em;
 }
 
 .form-navigation {
     display: flex;
     justify-content: space-between;
-    margin-top: 30px;
-    gap: 15px;
+    margin-top: 20px;
+    gap: 10px;
 }
 
 .nav-btn {
     flex: 1;
-    padding: 12px 30px;
+    padding: 10px 20px;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 0.9em;
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
@@ -252,5 +261,41 @@ select:focus {
 .form-navigation .submit-btn {
     margin-top: 0;
     flex: 1;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+    html {
+        font-size: 13px;
+    }
+    body {
+        padding: 8px;
+    }
+    .container {
+        padding: 14px;
+        border-radius: 10px;
+    }
+    h1 {
+        font-size: 1.35em;
+        margin-bottom: 14px;
+    }
+    .form-section {
+        padding: 12px;
+        margin-bottom: 14px;
+    }
+    .radio-group {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .bmi-unit-toggle {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .bmi-inputs {
+        grid-template-columns: 1fr;
+    }
+    .bmi-imperial.bmi-inputs {
+        grid-template-columns: 1fr;
+    }
 }
 

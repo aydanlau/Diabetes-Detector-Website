@@ -1,16 +1,18 @@
 .intro-content {
     max-width: 800px;
     margin: 0 auto;
-    padding: 40px;
+    padding: 24px;
     background: white;
-    border-radius: 15px;
+    border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 .completion-counter {
     text-align: center;
-    margin: 16px 0;
-    padding: 8px 12px;
+    margin: 12px 0;
+    padding: 6px 10px;
     background: #f5f5f5;
     border-radius: 6px;
     border: 1px solid #e8e8e8;
@@ -18,73 +20,76 @@
 
 .counter-text {
     color: #777;
-    font-size: 1em;
+    font-size: 0.9em;
     margin: 0;
     font-weight: 400;
 }
 
 .counter-number {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 600;
     color: #666;
 }
 
 .intro-section {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .intro-section h2 {
     color: #667eea;
-    margin-bottom: 15px;
-    font-size: 1.8em;
+    margin-bottom: 10px;
+    font-size: 1.35em;
 }
 
 .intro-section p {
-    line-height: 1.8;
+    line-height: 1.6;
     color: #555;
-    font-size: 1.1em;
-    margin-bottom: 15px;
+    font-size: 0.95em;
+    margin-bottom: 10px;
 }
 
 .intro-section ul {
-    margin-left: 20px;
-    line-height: 1.8;
+    margin-left: 18px;
+    line-height: 1.6;
     color: #555;
+    font-size: 0.95em;
 }
 
 .intro-section li {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .disclaimer-box {
     background: #fff3cd;
     border: 2px solid #ffc107;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 30px 0;
+    border-radius: 8px;
+    padding: 14px;
+    margin: 20px 0;
 }
 
 .disclaimer-box h3 {
     color: #856404;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 1.1em;
 }
 
 .disclaimer-box p {
     color: #856404;
     font-weight: 500;
+    font-size: 0.9em;
 }
 
 .start-button {
     display: block;
     width: 100%;
-    max-width: 300px;
-    margin: 40px auto;
-    padding: 15px 30px;
+    max-width: 280px;
+    margin: 24px auto;
+    padding: 12px 24px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     text-decoration: none;
     border-radius: 8px;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: bold;
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -93,5 +98,29 @@
 .start-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+@media (max-width: 600px) {
+    .intro-content {
+        padding: 16px;
+    }
+    .intro-section h2 {
+        font-size: 1.2em;
+    }
+    .intro-section p {
+        font-size: 0.9em;
+    }
+    .disclaimer-box {
+        padding: 12px;
+        margin: 16px 0;
+    }
+    .disclaimer-box p {
+        font-size: 0.85em;
+    }
+    .start-button {
+        font-size: 0.95em;
+        padding: 10px 20px;
+        margin: 20px auto;
+    }
 }
 

@@ -1,23 +1,31 @@
 .result-container {
     text-align: center;
-    padding: 40px;
+    padding: 24px;
+    min-width: 0;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .prediction-box {
     background: white;
-    border-radius: 15px;
-    padding: 40px;
-    margin: 20px auto;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 16px auto;
     max-width: 600px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    min-width: 0;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .prediction-result {
-    font-size: 2.2em;
+    font-size: 1.6em;
     font-weight: bold;
-    margin: 20px 0;
-    padding: 20px;
-    border-radius: 10px;
+    margin: 14px 0;
+    padding: 14px;
+    border-radius: 8px;
 }
 
 .risk-low {
@@ -63,15 +71,15 @@
 
 .risk-percentage-value {
     display: block;
-    font-size: 3em;
+    font-size: 2.2em;
     font-weight: bold;
     color: #333;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 
 .risk-percentage-label {
     display: block;
-    font-size: 1.1em;
+    font-size: 0.95em;
     color: #666;
     font-weight: 500;
 }
@@ -83,8 +91,8 @@
 .risk-bar-labels {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 0.9em;
+    margin-bottom: 8px;
+    font-size: 0.8em;
     color: #666;
     font-weight: 500;
 }
@@ -182,7 +190,7 @@
 .next-steps-header h3 {
     margin: 0;
     color: #667eea;
-    font-size: 1.3em;
+    font-size: 1.1em;
 }
 
 .dropdown-arrow {
@@ -195,6 +203,7 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
+    min-width: 0;
 }
 
 .next-steps-content.open {
@@ -202,11 +211,21 @@
     transition: max-height 0.5s ease-in;
 }
 
+.next-steps-content * {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
 .recommendation-box {
-    margin-top: 20px;
-    padding: 25px;
-    border-radius: 10px;
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 8px;
     border: 2px solid;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .recommendation-box.risk-low {
@@ -231,8 +250,8 @@
 
 .recommendation-box h4 {
     margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.4em;
+    margin-bottom: 12px;
+    font-size: 1.15em;
 }
 
 .recommendation-box.risk-low h4 {
@@ -252,20 +271,74 @@
 }
 
 .recommendation-box ul {
-    margin-left: 20px;
-    line-height: 1.8;
+    margin-left: 18px;
+    line-height: 1.55;
+    font-size: 0.9em;
+    padding-right: 0;
 }
 
 .recommendation-box li {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     color: #333;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .recommendation-box .note {
-    margin-top: 20px;
-    padding: 15px;
+    margin-top: 14px;
+    padding: 12px;
     background: rgba(255, 255, 255, 0.7);
     border-radius: 5px;
     font-style: italic;
+    font-size: 0.9em;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* Mobile: prevent text leaking and smaller fonts */
+@media (max-width: 600px) {
+    .result-container {
+        padding: 14px;
+    }
+    .prediction-box {
+        padding: 14px;
+        margin: 12px auto;
+    }
+    .prediction-result {
+        font-size: 1.35em;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    .risk-percentage-value {
+        font-size: 1.8em;
+    }
+    .risk-percentage-label {
+        font-size: 0.85em;
+    }
+    .next-steps-header {
+        padding: 10px 12px;
+    }
+    .next-steps-header h3 {
+        font-size: 1em;
+    }
+    .recommendation-box {
+        padding: 12px;
+    }
+    .recommendation-box h4 {
+        font-size: 1.05em;
+    }
+    .recommendation-box ul {
+        font-size: 0.85em;
+        margin-left: 16px;
+    }
+    .recommendation-box .note {
+        font-size: 0.85em;
+        padding: 10px;
+    }
+    .back-button {
+        font-size: 0.9em;
+        padding: 10px 20px;
+        margin-top: 20px;
+    }
 }
 
